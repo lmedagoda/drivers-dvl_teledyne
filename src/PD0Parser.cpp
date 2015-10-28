@@ -111,6 +111,7 @@ void PD0Parser::parseEnsemble(uint8_t const* buffer, size_t size)
         offsets[i] = le16toh(header.offsets[i]);
 
     invalidateCellReadings();
+    invalidateBottomTrackReadings();
     for (int i = 0; i < header.msg_count; ++i)
         parseMessage(buffer + offsets[i], size - offsets[i]);
 }
@@ -127,6 +128,20 @@ void PD0Parser::invalidateCellReadings()
             cellReadings.readings[i].quality[beam]   = base::unset<float>();
         }
     }
+}
+
+void PD0Parser::invalidateBottomTrackReadings()
+{
+        for (int beam = 0; beam < 4; ++beam)
+        {
+            bottomTracking.range[beam]  = base::unset<float>();
+            bottomTracking.velocity[beam] = base::unset<float>();
+            bottomTracking.correlation[beam] = base::unset<float>();
+            bottomTracking.evaluation[beam]   = base::unset<float>();
+            bottomTracking.good_ping_ratio[beam]   = base::unset<float>();
+            bottomTracking.rssi[beam]   = base::unset<float>();
+
+        }
 }
 
 void PD0Parser::parseMessage(uint8_t const* buffer, size_t size)

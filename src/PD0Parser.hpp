@@ -17,6 +17,7 @@ namespace dvl_teledyne
         int extractPacket(uint8_t const* buffer, size_t size, size_t max_size = 0) const;
         int getSizeOfMessage(uint16_t msg_id) const;
         void invalidateCellReadings();
+        void invalidateBottomTrackReadings();
         void parseMessage(uint8_t const* buffer, size_t size);
         void parseFixedLeader(uint8_t const* buffer, size_t size);
         void parseVariableLeader(uint8_t const* buffer, size_t size);
